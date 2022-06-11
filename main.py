@@ -5,9 +5,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import linregress
 
-df = pd.read_excel(r"C:\Users\edcal\OneDrive\Desktop\Edward\Projects\ElementConsumption.xlsx")
+df = pd.read_excel(r"ElementConsumption.xlsx")
 element=input("Enter element: ")
-workbook = openpyxl.load_workbook(filename=r"C:\Users\edcal\OneDrive\Desktop\Edward\Projects\ElementConsumption.xlsx")
+workbook = openpyxl.load_workbook(filename=r"ElementConsumption.xlsx")
 
 if element == "Li" or "Lithium" or "lithium":
     print(df.columns[3])
