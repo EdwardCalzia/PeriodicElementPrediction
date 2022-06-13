@@ -1,52 +1,41 @@
 import pandas as pd
-import xlsxwriter
-import openpyxl
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.stats import linregress
 
 df = pd.read_excel(r"ElementConsumption.xlsx")
-element=input("Enter element: ")
-workbook = openpyxl.load_workbook(filename=r"ElementConsumption.xlsx")
 
-if element == "Li" or "Lithium" or "lithium":
-    print(df.columns[3])
-    Lithium=df[df.columns[3]]
-    summ=0
-    lists=[0,0,0,0,0,0,0]
-    years=["2013","2014","2015","2016","2017","2018","2019"]
-    for i in range(1,len(Lithium)):
-        print(Lithium[i])
-        summ+=Lithium[i]
-        lists[i-1]+=Lithium[i]
-    average=summ/len(Lithium)
-    print(average)
-    print(lists)
+availableElements = [["li", "lithium","Lithium"],["beryllium","be","Beryllium"],["vanadium","v","Vanadium"]]
+xdata = [2013,2014,2015,2016,2017,2018,2019][::-1]
+ydata = []
+futureYears = 5
 
+def predict(year):
+    return c + (m * (year))
 
-    def best_fit(X, Y):
-        
-        xbar = average
-        ybar = 2016
-        n = len(X) # or len(Y)
+if __name__=='__main__':
+    elements = input("Enter elements (separate with comma) : ").rstrip().replace(' ','').split(',')
 
-        numer = sum([xi*yi for xi,yi in zip(X, Y)]) - n * xbar * ybar
-        denum = sum([xi**2 for xi in X]) - n * xbar**2
+    for element in elements:
+        for availableElement in availableElements:
+            if element.lower() in availableElement:
+                ydata.append(df.loc[:,availableElement[2]])
+                break
 
-        b = numer / denum
-        a = ybar - b * xbar
+    for ydataI in ydata:
+        sumx = sum(xdata)
+        sumy = sum(ydataI)
+        sumx2 = sum([x**2 for x in xdata])
+        sumy2 = sum([y**2 for y in ydataI])
+        sumxy = sum([x*y for x,y in zip(xdata, ydataI)])
+        n = len(xdata)
 
-        print('best fit line:\ny = {:.2f} + {:.2f}x'.format(a, b))
+        m = ((n*sumxy)-(sumx*sumy))/((n*sumx2)-(sumx**2))
+        c = (sumy - (m * sumx))/n
 
-        return a, b
+        linedataX = np.linspace(min(xdata),max(xdata)+futureYears, 100)
+        linedataY = c + (m * linedataX)
 
-    a, b = best_fit(years, lists)
-    plt.scatter(years, lists)
-    yfit = [a + b * xi for xi in years]
-    plt.plot(X, yfit)
+        plt.scatter(xdata, ydataI)
+        plt.plot(linedataX, linedataY)
+
     plt.show()
-
-
-
-
-
