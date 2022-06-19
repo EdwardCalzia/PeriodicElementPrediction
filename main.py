@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-df = pd.read_excel(r"C:\Users\edcal\OneDrive\Desktop\Edward\Projects\ElementConsumption.xlsx")
+df = pd.read_excel(r"ElementConsumption.xlsx")
 
 availableElements = [["li", "lithium","Lithium"],["beryllium","be","Beryllium"],["vanadium","v","Vanadium"],["iron","fe","Iron"],["nickel","ni","Nickel"],["zinc","zn","Zinc"],["lead","pb","Lead"],["uranium","u","Uranium"]]
 xdata = [2013,2014,2015,2016,2017,2018,2019][::-1]
