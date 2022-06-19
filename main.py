@@ -7,13 +7,16 @@ df = pd.read_excel(r"ElementConsumption.xlsx")
 availableElements = [["li", "lithium","Lithium"],["beryllium","be","Beryllium"],["vanadium","v","Vanadium"]]
 xdata = [2013,2014,2015,2016,2017,2018,2019][::-1]
 ydata = []
-futureYears = 5
+total_lithium=0
+
 
 def predict(year):
     return c + (m * (year))
 
 if __name__=='__main__':
     elements = input("Enter elements (separate with comma) : ").rstrip().replace(' ','').split(',')
+
+    futureYears = int(input("Enter number of years to predict : "))
 
     for element in elements:
         for availableElement in availableElements:
@@ -38,4 +41,15 @@ if __name__=='__main__':
         plt.scatter(xdata, ydataI)
         plt.plot(linedataX, linedataY)
 
+        print(m)
+
+        if elements == "li" or "lithium" or"Lithium":
+            for i in range(0,futureYears):
+                total_lithium+=predict(i+2022)         
+
+                if total_lithium >= 14000000:
+                    print("Lithium will run out in " + str(i+2022))
+                    break
+                else:
+                    pass
     plt.show()
